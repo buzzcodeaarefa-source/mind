@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="violet" data-density="comfortable">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MindVault - Your Second Brain. Premium personal knowledge management and productivity command center.">
+  <meta name="theme-color" content="#080B14">
+  <title>MindVault — Your Second Brain</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-body">
+  <!-- Audio Context / Ambient Sound Synth (Web Audio API) -->
+
+  <!-- App Layout Container -->
+  <div class="app-layout" id="app-layout">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <a href="#dashboard" class="brand-logo" id="brand-home-link" aria-label="MindVault Home">
+          <div class="logo-gem">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">MindVault</span>
+            <span class="brand-badge">PRO</span>
+          </div>
+        </a>
+        <button class="sidebar-toggle-btn icon-btn" id="sidebar-collapse-toggle" title="Toggle Sidebar (Ctrl+\)" aria-label="Toggle Sidebar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+            <path d="M9 3v18"/>
+            <path d="m14 9-3 3 3 3"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Quick Action in Sidebar -->
+      <div class="sidebar-quick-action">
+        <button class="btn btn-primary btn-quick-capture" id="sidebar-quick-capture-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="M12 5v14"/>
+          </svg>
+          <span class="btn-text">Quick Capture</span>
+          <kbd class="sidebar-kbd">Ctrl+N</kbd>
+        </button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-group">
+          <span class="nav-group-title">WORKSPACE</span>
+          <button class="nav-item active" data-section="dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </button>
+          <button class="nav-item" data-section="notes">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/><path d="M6 14h6"/>
+            </svg>
+            <span class="nav-label">All Notes</span>
+            <span class="nav-badge" id="badge-notes-count">0</span>
+          </button>
+          <button class="nav-item" data-section="tasks">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            <span class="nav-label">Tasks</span>
+            <span class="nav-badge" id="badge-tasks-count">0</span>
+          </button>
+          <button class="nav-item" data-section="journal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/>
+            </svg>
+            <span class="nav-label">Daily Journal</span>
+          </button>
+          <button class="nav-item" data-section="focus">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span class="nav-label">Focus Studio</span>
+            <span class="status-dot-pulse" id="sidebar-focus-pulse" style="display:none;"></span>
+          </button>
+          <button class="nav-item" data-section="analytics">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+            </svg>
+            <span class="nav-label">Productivity</span>
+          </button>
+        </div>
+
+        <div class="nav-group">
+          <span class="nav-group-title">ORGANIZATION</span>
+          <button class="nav-item" data-section="collections">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m16 6 4 14H4L8 6Z"/><path d="M12 2v4"/><path d="M12 10v4"/>
+            </svg>
+            <span class="nav-label">Collections</span>
+          </button>
+          <button class="nav-item" data-section="favorites">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            <span class="nav-label">Favorites</span>
+            <span class="nav-badge" id="badge-favorites-count">0</span>
+          </button>
+          <button class="nav-item" data-section="archive">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/>
+            </svg>
+            <span class="nav-label">Archive</span>
+            <span class="nav-badge" id="badge-archive-count">0</span>
+          </button>
+          <button class="nav-item" data-section="trash">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/>
+            </svg>
+            <span class="nav-label">Trash</span>
+            <span class="nav-badge" id="badge-trash-count">0</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="storage-meter-box" id="storage-meter-box" title="Local browser storage usage">
+          <div class="storage-info">
+            <span class="storage-label">Local Vault</span>
+            <span class="storage-val" id="sidebar-storage-val">0 KB</span>
+          </div>
+          <div class="storage-bar-track">
+            <div class="storage-bar-fill" id="sidebar-storage-bar" style="width: 2%;"></div>
+          </div>
+        </div>
+
+        <div class="sidebar-footer-actions">
+          <button class="nav-item" data-section="settings" id="sidebar-settings-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-label">Settings</span>
+          </button>
+          
+          <button class="icon-btn theme-toggle-btn" id="sidebar-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+            <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>
+            </svg>
+            <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- User profile area -->
+        <div class="user-profile-badge" id="user-profile-trigger" title="Edit Profile in Settings">
+          <div class="user-avatar" id="sidebar-user-avatar">M</div>
+          <div class="user-info">
+            <span class="user-name" id="sidebar-user-name">Mind Explorer</span>
+            <span class="user-status">Vault Synced</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- SIDEBAR BACKDROP (Mobile) -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="app-main-wrapper">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="app-topbar" id="app-topbar">
+        <div class="topbar-left">
+          <button class="icon-btn mobile-menu-btn" id="mobile-menu-toggle" aria-label="Open Navigation">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+            </svg>
+          </button>
+
+          <div class="page-header-info">
+            <h1 class="page-title" id="page-title">Dashboard</h1>
+            <span class="page-subtitle" id="page-subtitle">Personal Command Center</span>
+          </div>
+        </div>
+
+        <!-- Global Search Trigger -->
+        <div class="topbar-center">
+          <button class="global-search-trigger" id="global-search-btn" title="Open Global Search (Ctrl+K)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            <span class="search-placeholder">Search notes, tasks, tags...</span>
+            <span class="search-shortcut">
+              <kbd>Ctrl</kbd><kbd>K</kbd>
+            </span>
+          </button>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Quick Capture topbar button -->
+          <button class="btn btn-primary btn-sm btn-icon-text" id="topbar-quick-capture-btn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"/><path d="M12 5v14"/>
+            </svg>
+            <span>Capture</span>
+          </button>
+
+          <!-- Focus State Indicator / Button -->
+          <button class="topbar-focus-chip" id="topbar-focus-chip" title="Focus Studio" style="display:none;">
+            <span class="pulse-ring"></span>
+            <span class="focus-chip-text" id="topbar-focus-text">25:00</span>
+          </button>
+
+          <!-- Toggle Right Context Panel -->
+          <button class="icon-btn panel-toggle-btn" id="context-panel-toggle" title="Toggle Context Panel" aria-label="Toggle Context Panel">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+              <path d="M15 3v18"/>
+              <path d="m10 9 3 3-3 3"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN WORKSPACE VIEWPORT -->
+      <main class="app-content" id="app-content">
+
+        <!-- ============================================== -->
+        <!-- VIEW: DASHBOARD (Personal Command Center)     -->
+        <!-- ============================================== -->
+        <section class="view-section active" id="view-dashboard">
+          
+          <!-- Hero Banner: Time-aware greeting & quotes -->
+          <div class="dashboard-hero">
+            <div class="hero-text-content">
+              <div class="hero-date-badge" id="hero-current-date">Today</div>
+              <h2 class="hero-greeting" id="hero-greeting">Good evening, Explorer.</h2>
+              <p class="hero-quote" id="hero-quote">"Your mind is for having ideas, not holding them."</p>
+            </div>
+            
+            <!-- Quick thought capture widget in hero -->
+            <div class="hero-quick-capture">
+              <div class="quick-input-wrapper">
+                <input type="text" id="hero-quick-input" placeholder="Capture a quick thought or task... (Press Enter)" autocomplete="off">
+                <div class="quick-input-actions">
+                  <select id="hero-quick-type" aria-label="Capture Type">
+                    <option value="note">Note</option>
+                    <option value="task">Task</option>
+                  </select>
+                  <button class="btn btn-primary btn-sm" id="hero-quick-save-btn">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Stat Metric Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Tasks Completed</span>
+                <span class="metric-icon-box text-emerald">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="metric-tasks-done">0</span>
+                <span class="metric-sub" id="metric-tasks-pending">0 pending</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Daily Progress</span>
+                <span class="metric-icon-box text-violet">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="metric-progress-pct">0%</span>
+                <div class="metric-progress-bar">
+                  <div class="metric-progress-fill" id="metric-progress-bar-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Notes Captured</span>
+                <span class="metric-icon-box text-blue">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="metric-notes-count">0</span>
+                <span class="metric-sub" id="metric-notes-today">0 created today</span>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-title">Focus Time</span>
+                <span class="metric-icon-box text-amber">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                  </svg>
+                </span>
+              </div>
+              <div class="metric-value-row">
+                <span class="metric-val" id="metric-focus-minutes">0m</span>
+                <span class="metric-sub" id="metric-focus-streak">0 day streak</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main Dashboard Grid Widgets -->
+          <div class="dashboard-grid">
+            
+            <!-- Left Main Column: Continue Where You Left Off & Tasks -->
+            <div class="dash-col main-dash-col">
+              
+              <!-- Continue where you left off (recent notes) -->
+              <div class="dashboard-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <h3>Continue Where You Left Off</h3>
+                  </div>
+                  <button class="panel-action-btn" data-section="notes">View all</button>
+                </div>
+                <div class="recent-notes-list" id="dash-recent-notes">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Today's Tasks in Dashboard -->
+              <div class="dashboard-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                    </svg>
+                    <h3>Today's Key Priorities</h3>
+                  </div>
+                  <button class="panel-action-btn" data-section="tasks">Manage tasks</button>
+                </div>
+                <div class="dash-tasks-list" id="dash-today-tasks">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Dash Column: Focus Widget & Weekly Activity -->
+            <div class="dash-col side-dash-col">
+              
+              <!-- Focus Studio Quick Launcher -->
+              <div class="dashboard-panel focus-widget-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 16 14"/>
+                    </svg>
+                    <h3>Focus Studio</h3>
+                  </div>
+                  <span class="badge badge-accent" id="dash-focus-mode-badge">25 min</span>
+                </div>
+                
+                <div class="focus-widget-body">
+                  <div class="focus-timer-display" id="dash-focus-timer">25:00</div>
+                  <p class="focus-widget-sub" id="dash-focus-subtext">Ready for your next deep work sprint</p>
+                  
+                  <div class="focus-widget-controls">
+                    <button class="btn btn-primary btn-block" id="dash-focus-action-btn">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                      </svg>
+                      <span>Start Deep Focus</span>
+                    </button>
+                    <button class="btn btn-secondary btn-sm" data-section="focus">Open Studio</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Weekly Activity Visualization -->
+              <div class="dashboard-panel activity-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 20v-6M6 20V10M18 20V4"/>
+                    </svg>
+                    <h3>7-Day Momentum</h3>
+                  </div>
+                  <span class="panel-meta-text" id="dash-activity-total">0 actions</span>
+                </div>
+                
+                <div class="weekly-chart-container">
+                  <div class="weekly-bars" id="dash-weekly-bars">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+                
+                <div class="streak-mini-status">
+                  <div class="streak-icon-box">🔥</div>
+                  <div class="streak-text-box">
+                    <span class="streak-title" id="dash-streak-title">0 Day Streak</span>
+                    <span class="streak-sub" id="dash-streak-sub">Complete a task or write a journal entry to build your streak</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: NOTES (All Notes Explorer)               -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-notes">
+          
+          <!-- Notes Header Toolbar -->
+          <div class="section-toolbar">
+            <div class="toolbar-left">
+              <div class="search-input-wrapper">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input type="text" id="notes-filter-search" placeholder="Filter notes..." autocomplete="off">
+              </div>
+
+              <!-- Category filter pill list -->
+              <div class="category-pill-rail" id="notes-category-pills">
+                <!-- Dynamically generated pills -->
+              </div>
+            </div>
+
+            <div class="toolbar-right">
+              <!-- Sort dropdown -->
+              <div class="select-wrapper">
+                <select id="notes-sort-select" aria-label="Sort Notes">
+                  <option value="updated-desc">Recently Updated</option>
+                  <option value="created-desc">Newest First</option>
+                  <option value="created-asc">Oldest First</option>
+                  <option value="title-asc">Title (A-Z)</option>
+                </select>
+              </div>
+
+              <!-- View toggle: Grid vs List -->
+              <div class="view-toggle-group">
+                <button class="icon-btn active" id="notes-layout-grid" title="Grid View" aria-label="Grid View">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/>
+                  </svg>
+                </button>
+                <button class="icon-btn" id="notes-layout-list" title="List View" aria-label="List View">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/>
+                  </svg>
+                </button>
+              </div>
+
+              <button class="btn btn-primary" id="btn-create-note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"/><path d="M12 5v14"/>
+                </svg>
+                <span>New Note</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Tags Bar -->
+          <div class="tags-filter-bar" id="notes-tags-filter-bar">
+            <!-- Dynamically populated tags -->
+          </div>
+
+          <!-- Notes Container -->
+          <div class="notes-workspace-body">
+            <!-- Pinned notes group -->
+            <div class="notes-group" id="pinned-notes-group" style="display:none;">
+              <h4 class="notes-group-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
+                </svg>
+                <span>PINNED NOTES</span>
+              </h4>
+              <div class="notes-grid layout-grid" id="pinned-notes-grid"></div>
+            </div>
+
+            <!-- Regular notes group -->
+            <div class="notes-group">
+              <h4 class="notes-group-title" id="regular-notes-title" style="display:none;">ALL NOTES</h4>
+              <div class="notes-grid layout-grid" id="notes-grid">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+
+            <!-- Empty State for Notes -->
+            <div class="empty-state-card" id="notes-empty-state" style="display:none;">
+              <div class="empty-state-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" x2="8" y1="13" y2="13"/>
+                  <line x1="16" x2="8" y1="17" y2="17"/>
+                  <line x1="10" x2="8" y1="9" y2="9"/>
+                </svg>
+              </div>
+              <h3 class="empty-state-title">No notes found</h3>
+              <p class="empty-state-desc">Capture thoughts, knowledge, ideas, or meeting notes.</p>
+              <button class="btn btn-primary" id="btn-empty-create-note">Create Your First Note</button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: NOTE EDITOR (Full Polished Editor)       -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-note-editor">
+          <div class="editor-header-bar">
+            <div class="editor-left-actions">
+              <button class="btn btn-ghost btn-sm" id="editor-back-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m15 18-6-6 6-6"/>
+                </svg>
+                <span>Back to Notes</span>
+              </button>
+              
+              <div class="editor-save-status" id="editor-save-status">
+                <span class="status-indicator-dot"></span>
+                <span class="status-indicator-text">All changes saved</span>
+              </div>
+            </div>
+
+            <div class="editor-right-actions">
+              <!-- Category selector -->
+              <div class="select-wrapper">
+                <select id="editor-category-select" aria-label="Note Category">
+                  <!-- Options generated from categories -->
+                </select>
+              </div>
+
+              <!-- Color label selector -->
+              <div class="color-picker-dropdown">
+                <button class="icon-btn" id="editor-color-btn" title="Note Accent Color" aria-label="Note Accent Color">
+                  <span class="color-dot default" id="editor-current-color-dot"></span>
+                </button>
+                <div class="color-palette-popover" id="editor-color-palette">
+                  <button class="color-swatch-btn" data-color="none" title="Default"></button>
+                  <button class="color-swatch-btn" data-color="violet" title="Violet"></button>
+                  <button class="color-swatch-btn" data-color="blue" title="Blue"></button>
+                  <button class="color-swatch-btn" data-color="mint" title="Mint"></button>
+                  <button class="color-swatch-btn" data-color="amber" title="Amber"></button>
+                  <button class="color-swatch-btn" data-color="rose" title="Rose"></button>
+                </div>
+              </div>
+
+              <!-- Pin toggle -->
+              <button class="icon-btn" id="editor-pin-btn" title="Pin Note" aria-label="Pin Note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" x2="12" y1="17" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/>
+                </svg>
+              </button>
+
+              <!-- Favorite toggle -->
+              <button class="icon-btn" id="editor-favorite-btn" title="Favorite Note" aria-label="Favorite Note">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </button>
+
+              <!-- More actions dropdown (Archive, Duplicate, Download MD, Delete) -->
+              <div class="dropdown-wrapper">
+                <button class="icon-btn" id="editor-more-btn" title="More Options" aria-label="More Options">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/>
+                  </svg>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" id="editor-more-menu">
+                  <button class="dropdown-item" id="editor-duplicate-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="13" height="13" x="9" y="9" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    <span>Duplicate Note</span>
+                  </button>
+                  <button class="dropdown-item" id="editor-archive-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="5" x="2" y="3" rx="1"/><path d="M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8"/><path d="M10 12h4"/></svg>
+                    <span>Archive Note</span>
+                  </button>
+                  <button class="dropdown-item" id="editor-export-md-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                    <span>Export Markdown (.md)</span>
+                  </button>
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item text-danger" id="editor-trash-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
+                    <span>Move to Trash</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Note Content Area -->
+          <div class="editor-canvas">
+            <div class="editor-paper">
+              
+              <!-- Title input -->
+              <input type="text" class="editor-title-input" id="editor-title-input" placeholder="Untitled Note..." autocomplete="off">
+              
+              <!-- Tags manager in editor -->
+              <div class="editor-tags-row">
+                <div class="editor-tags-list" id="editor-tags-list">
+                  <!-- Tag chips rendered here -->
+                </div>
+                <div class="add-tag-inline">
+                  <input type="text" id="editor-add-tag-input" placeholder="+ Add tag (Enter)" autocomplete="off">
+                </div>
+              </div>
+
+              <!-- Formatting Toolbar -->
+              <div class="editor-toolbar" id="editor-toolbar">
+                <button type="button" class="toolbar-btn" data-command="bold" title="Bold (Ctrl+B)">
+                  <strong>B</strong>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="italic" title="Italic (Ctrl+I)">
+                  <em>I</em>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="underline" title="Underline (Ctrl+U)">
+                  <u>U</u>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="strikeThrough" title="Strikethrough">
+                  <s>S</s>
+                </button>
+                <div class="toolbar-separator"></div>
+                
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="h2" title="Heading 2">
+                  H2
+                </button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="h3" title="Heading 3">
+                  H3
+                </button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="p" title="Paragraph">
+                  P
+                </button>
+                <div class="toolbar-separator"></div>
+
+                <button type="button" class="toolbar-btn" data-command="insertUnorderedList" title="Bullet List">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="insertOrderedList" title="Numbered List">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="blockquote" title="Quote">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/></svg>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="formatBlock" data-val="pre" title="Code Block">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </button>
+                <button type="button" class="toolbar-btn" id="editor-link-btn" title="Insert Link">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                </button>
+                <button type="button" class="toolbar-btn" data-command="removeFormat" title="Clear Formatting">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+                </button>
+              </div>
+
+              <!-- Sanitized contenteditable body -->
+              <div class="editor-content-body" id="editor-content-body" contenteditable="true" spellcheck="true" placeholder="Start typing your thoughts, notes, research, or paste Markdown..."></div>
+              
+              <!-- Editor Footer Stats -->
+              <div class="editor-footer-stats">
+                <span id="editor-word-count">0 words</span>
+                <span class="dot-separator">•</span>
+                <span id="editor-char-count">0 characters</span>
+                <span class="dot-separator">•</span>
+                <span id="editor-last-saved">Saved just now</span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: TASKS (Complete Task Manager)            -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-tasks">
+          
+          <div class="tasks-page-header">
+            <div class="tasks-header-left">
+              <h2>Task Command</h2>
+              <p class="section-sub">Organize, prioritize, and conquer your daily commitments.</p>
+            </div>
+
+            <div class="tasks-header-right">
+              <button class="btn btn-primary" id="btn-add-task-modal">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"/><path d="M12 5v14"/>
+                </svg>
+                <span>Add Task</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Task Progress Card -->
+          <div class="task-progress-card">
+            <div class="progress-details">
+              <div class="progress-stats-box">
+                <span class="progress-big-pct" id="task-progress-pct">0%</span>
+                <span class="progress-label" id="task-progress-label">0 of 0 tasks completed</span>
+              </div>
+              <div class="progress-pill-breakdown">
+                <span class="badge badge-low" id="task-badge-low">0 Low</span>
+                <span class="badge badge-medium" id="task-badge-med">0 Med</span>
+                <span class="badge badge-high" id="task-badge-high">0 High</span>
+              </div>
+            </div>
+            <div class="task-progress-bar-track">
+              <div class="task-progress-bar-fill" id="task-progress-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- Quick Add Task Bar -->
+          <div class="quick-add-task-bar">
+            <input type="text" id="quick-task-title" placeholder="Add a new task... (Press Enter to save)" autocomplete="off">
+            <div class="quick-task-meta-row">
+              <input type="date" id="quick-task-due" title="Due Date">
+              <select id="quick-task-priority" aria-label="Priority">
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+                <option value="low">Low Priority</option>
+              </select>
+              <select id="quick-task-category" aria-label="Category">
+                <!-- Dynamically populated categories -->
+              </select>
+              <button class="btn btn-primary btn-sm" id="btn-quick-task-submit">Create</button>
+            </div>
+          </div>
+
+          <!-- Tasks Filter Bar & Tabs -->
+          <div class="tasks-filter-bar">
+            <div class="filter-tabs" id="tasks-filter-tabs">
+              <button class="filter-tab active" data-filter="all">
+                <span>All</span>
+                <span class="tab-count" id="count-tasks-all">0</span>
+              </button>
+              <button class="filter-tab" data-filter="today">
+                <span>Today</span>
+                <span class="tab-count" id="count-tasks-today">0</span>
+              </button>
+              <button class="filter-tab" data-filter="upcoming">
+                <span>Upcoming</span>
+                <span class="tab-count" id="count-tasks-upcoming">0</span>
+              </button>
+              <button class="filter-tab" data-filter="completed">
+                <span>Completed</span>
+                <span class="tab-count" id="count-tasks-completed">0</span>
+              </button>
+              <button class="filter-tab text-danger" data-filter="overdue">
+                <span>Overdue</span>
+                <span class="tab-count" id="count-tasks-overdue">0</span>
+              </button>
+            </div>
+
+            <!-- Sorting & Search -->
+            <div class="tasks-filter-actions">
+              <div class="search-input-wrapper">
+                <input type="text" id="tasks-search-input" placeholder="Search tasks..." autocomplete="off">
+              </div>
+              <div class="select-wrapper">
+                <select id="tasks-sort-select" aria-label="Sort Tasks">
+                  <option value="due-asc">Due Date (Earliest)</option>
+                  <option value="priority-desc">Priority (High to Low)</option>
+                  <option value="created-desc">Recently Added</option>
+                  <option value="title-asc">Title (A-Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Task Items List -->
+          <div class="tasks-list-container" id="tasks-list">
+            <!-- Dynamically populated tasks -->
+          </div>
+
+          <!-- Empty State for Tasks -->
+          <div class="empty-state-card" id="tasks-empty-state" style="display:none;">
+            <div class="empty-state-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <h3 class="empty-state-title">No tasks in this view</h3>
+            <p class="empty-state-desc">You're all caught up! Take a break or plan your next move.</p>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: DAILY JOURNAL (Mind Reflection)          -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-journal">
+          
+          <div class="journal-wrapper">
+            <!-- Journal Sidebar: Calendar navigator & entry history -->
+            <div class="journal-nav-panel">
+              <div class="journal-date-picker-box">
+                <div class="date-navigator-row">
+                  <button class="icon-btn" id="journal-prev-day-btn" title="Previous Day">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                  </button>
+                  <div class="active-date-display" id="journal-date-label">Today</div>
+                  <button class="icon-btn" id="journal-next-day-btn" title="Next Day">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                  </button>
+                </div>
+                
+                <input type="date" id="journal-native-date" class="journal-native-date">
+                <button class="btn btn-secondary btn-sm btn-block" id="journal-today-btn">Jump to Today</button>
+              </div>
+
+              <!-- Streak & stats card -->
+              <div class="journal-stats-card">
+                <div class="j-stat-row">
+                  <span class="j-stat-label">Journal Streak</span>
+                  <span class="j-stat-val text-amber" id="journal-streak-val">0 Days</span>
+                </div>
+                <div class="j-stat-row">
+                  <span class="j-stat-label">Total Entries</span>
+                  <span class="j-stat-val text-violet" id="journal-total-entries">0</span>
+                </div>
+              </div>
+
+              <!-- Prompt inspiration helper -->
+              <div class="journal-prompt-box">
+                <div class="prompt-header">
+                  <span>💡 Reflection Prompt</span>
+                  <button class="icon-btn-text" id="journal-shuffle-prompt-btn">New</button>
+                </div>
+                <p class="prompt-text" id="journal-prompt-text">What was a small victory you experienced today?</p>
+                <button class="btn btn-ghost btn-sm btn-block" id="journal-insert-prompt-btn">Use in Entry</button>
+              </div>
+
+              <!-- Past entries mini browser -->
+              <div class="journal-history-list">
+                <h4 class="history-list-title">RECENT ENTRIES</h4>
+                <div class="history-items-container" id="journal-history-items">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Journal Main Workspace -->
+            <div class="journal-entry-canvas">
+              
+              <!-- Mood Selector -->
+              <div class="journal-card mood-card">
+                <span class="journal-section-label">HOW ARE YOU FEELING TODAY?</span>
+                <div class="mood-selector" id="journal-mood-selector">
+                  <button class="mood-btn" data-mood="great" title="Great">
+                    <span class="mood-emoji">✨</span>
+                    <span class="mood-title">Energized</span>
+                  </button>
+                  <button class="mood-btn" data-mood="good" title="Good">
+                    <span class="mood-emoji">😊</span>
+                    <span class="mood-title">Good</span>
+                  </button>
+                  <button class="mood-btn" data-mood="neutral" title="Neutral">
+                    <span class="mood-emoji">🌿</span>
+                    <span class="mood-title">Calm</span>
+                  </button>
+                  <button class="mood-btn" data-mood="low" title="Low">
+                    <span class="mood-emoji">🌧️</span>
+                    <span class="mood-title">Tired</span>
+                  </button>
+                  <button class="mood-btn" data-mood="stressed" title="Stressed">
+                    <span class="mood-emoji">⚡</span>
+                    <span class="mood-title">Overwhelmed</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3 Things I'm Grateful For -->
+              <div class="journal-card gratitude-card">
+                <span class="journal-section-label">THREE THINGS I'M GRATEFUL FOR</span>
+                <div class="gratitude-inputs">
+                  <div class="gratitude-row">
+                    <span class="gratitude-num">1.</span>
+                    <input type="text" id="journal-gratitude-1" placeholder="Something or someone I appreciate today...">
+                  </div>
+                  <div class="gratitude-row">
+                    <span class="gratitude-num">2.</span>
+                    <input type="text" id="journal-gratitude-2" placeholder="A moment of peace or learning...">
+                  </div>
+                  <div class="gratitude-row">
+                    <span class="gratitude-num">3.</span>
+                    <input type="text" id="journal-gratitude-3" placeholder="An opportunity or comfort I have...">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Main Stream of Consciousness / Daily Reflections -->
+              <div class="journal-card main-entry-card">
+                <div class="entry-header-row">
+                  <span class="journal-section-label">DAILY REFLECTIONS & THOUGHTS</span>
+                  <span class="journal-saved-hint" id="journal-saved-hint">Saved automatically</span>
+                </div>
+                <textarea id="journal-content-textarea" placeholder="Clear your head. What's on your mind? What happened today? What did you learn?"></textarea>
+              </div>
+
+              <!-- Dual Prompts: Highlights & Improvements -->
+              <div class="journal-dual-grid">
+                <div class="journal-card">
+                  <span class="journal-section-label">🌟 TODAY'S HIGHLIGHTS</span>
+                  <textarea id="journal-highlights" placeholder="Key wins, decisions made, memorable events..."></textarea>
+                </div>
+                <div class="journal-card">
+                  <span class="journal-section-label">🌱 WHAT COULD BE IMPROVED?</span>
+                  <textarea id="journal-improvements" placeholder="What will I do better or differently tomorrow?"></textarea>
+                </div>
+              </div>
+
+              <!-- Privacy Notice Badge -->
+              <div class="journal-privacy-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                <span>Private & local to your browser. MindVault never sends your journal to any server.</span>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: FOCUS STUDIO (Pomodoro & Audio)          -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-focus">
+          
+          <div class="focus-studio-container">
+            
+            <!-- Focus Main Stage -->
+            <div class="focus-stage">
+              
+              <!-- Session Type Selector Tabs -->
+              <div class="focus-mode-pills" id="focus-mode-pills">
+                <button class="mode-pill active" data-mode="focus">Deep Focus (25m)</button>
+                <button class="mode-pill" data-mode="shortBreak">Short Break (5m)</button>
+                <button class="mode-pill" data-mode="longBreak">Long Break (15m)</button>
+                <button class="mode-pill" data-mode="custom">Custom</button>
+              </div>
+
+              <!-- Custom Duration Controls (Hidden unless custom active) -->
+              <div class="custom-timer-box" id="focus-custom-controls" style="display:none;">
+                <label for="custom-minutes-input">Duration (minutes):</label>
+                <input type="number" id="custom-minutes-input" min="1" max="120" value="45">
+                <button class="btn btn-secondary btn-sm" id="btn-apply-custom-timer">Set</button>
+              </div>
+
+              <!-- Circular Progress & Timer Centerpiece -->
+              <div class="focus-circle-wrapper">
+                <svg class="focus-progress-svg" width="340" height="340" viewBox="0 0 340 340">
+                  <circle class="circle-bg" cx="170" cy="170" r="145"></circle>
+                  <circle class="circle-progress" id="focus-circle-progress" cx="170" cy="170" r="145"></circle>
+                </svg>
+
+                <div class="focus-center-content">
+                  <span class="focus-current-tag" id="focus-current-tag">FOCUS SPRINT</span>
+                  <div class="focus-digits" id="focus-digits">25:00</div>
+                  <span class="focus-status-caption" id="focus-status-caption">Ready to concentrate</span>
+                </div>
+              </div>
+
+              <!-- Action Controls: Start, Pause, Reset, Skip -->
+              <div class="focus-action-controls">
+                <button class="btn btn-primary btn-lg focus-primary-btn" id="focus-toggle-btn">
+                  <svg id="focus-btn-icon-play" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <svg id="focus-btn-icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>
+                  <span id="focus-toggle-label">Start Focus</span>
+                </button>
+
+                <button class="icon-btn-lg" id="focus-reset-btn" title="Reset Session" aria-label="Reset Session">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </button>
+
+                <button class="icon-btn-lg" id="focus-skip-btn" title="Skip to Next" aria-label="Skip to Next">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></svg>
+                </button>
+              </div>
+
+              <!-- Associated task selector -->
+              <div class="focus-task-association">
+                <span class="assoc-label">Working on:</span>
+                <select id="focus-task-select" aria-label="Associated Task">
+                  <option value="">General Focus (No task linked)</option>
+                  <!-- Populated from active tasks -->
+                </select>
+              </div>
+
+            </div>
+
+            <!-- Focus Sidebar: Ambient Sound Generator & History -->
+            <div class="focus-side-panel">
+              
+              <!-- Ambient Sound Synth (Web Audio API) -->
+              <div class="dashboard-panel ambient-audio-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                    <h3>Ambient Sound Generator</h3>
+                  </div>
+                </div>
+
+                <p class="ambient-sub">Pure synthesized soundscapes to block distractions without streaming audio.</p>
+                
+                <div class="ambient-sound-buttons" id="ambient-sound-buttons">
+                  <button class="ambient-btn active" data-sound="off">Off</button>
+                  <button class="ambient-btn" data-sound="whitenoise">White Noise</button>
+                  <button class="ambient-btn" data-sound="rain">Gentle Rain</button>
+                  <button class="ambient-btn" data-sound="drone">Deep Drone</button>
+                  <button class="ambient-btn" data-sound="binaural">Binaural Wave</button>
+                </div>
+
+                <div class="volume-slider-row">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                  <input type="range" id="ambient-volume" min="0" max="1" step="0.05" value="0.3" aria-label="Volume">
+                </div>
+              </div>
+
+              <!-- Session Stats & History -->
+              <div class="dashboard-panel focus-history-panel">
+                <div class="panel-header">
+                  <div class="panel-title-group">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    <h3>Today's Sprints</h3>
+                  </div>
+                  <span class="badge badge-accent" id="focus-history-count">0 sessions</span>
+                </div>
+
+                <div class="focus-history-list" id="focus-history-list">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: PRODUCTIVITY ANALYTICS (Streaks & Graphs)-->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-analytics">
+          
+          <div class="analytics-header">
+            <div>
+              <h2>Productivity Analytics</h2>
+              <p class="section-sub">Metrics calculated directly from your stored notes, tasks, and focus sessions.</p>
+            </div>
+            
+            <div class="analytics-badge-box">
+              <span class="streak-badge-fire">🔥 <span id="analytics-streak-days">0</span> Day Streak</span>
+            </div>
+          </div>
+
+          <!-- Big Stat Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-title">Current Streak</span>
+              <div class="metric-val text-amber" id="stat-current-streak">0 Days</div>
+              <span class="metric-sub" id="stat-longest-streak">Best: 0 Days</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Total Tasks Completed</span>
+              <div class="metric-val text-emerald" id="stat-total-tasks-done">0</div>
+              <span class="metric-sub" id="stat-completion-rate">0% overall rate</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Total Focus Minutes</span>
+              <div class="metric-val text-violet" id="stat-total-focus-min">0m</div>
+              <span class="metric-sub" id="stat-total-sessions">0 sessions logged</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-title">Vault Knowledge Assets</span>
+              <div class="metric-val text-blue" id="stat-total-notes-count">0</div>
+              <span class="metric-sub" id="stat-vault-words">0 total words</span>
+            </div>
+          </div>
+
+          <!-- Activity Heatmap Calendar (Last 60 Days) -->
+          <div class="dashboard-panel heatmap-panel">
+            <div class="panel-header">
+              <div class="panel-title-group">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                <h3>Activity Heatmap (Last 60 Days)</h3>
+              </div>
+              <div class="heatmap-legend">
+                <span>Less</span>
+                <span class="legend-cell level-0"></span>
+                <span class="legend-cell level-1"></span>
+                <span class="legend-cell level-2"></span>
+                <span class="legend-cell level-3"></span>
+                <span class="legend-cell level-4"></span>
+                <span>More</span>
+              </div>
+            </div>
+
+            <div class="heatmap-container" id="analytics-heatmap">
+              <!-- Dynamically generated heat blocks -->
+            </div>
+          </div>
+
+          <!-- Categories & Focus Breakdown Grid -->
+          <div class="dashboard-grid">
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h3>Notes by Category</h3>
+              </div>
+              <div class="category-bars-list" id="analytics-category-bars">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h3>Task Priority Breakdown</h3>
+              </div>
+              <div class="category-bars-list" id="analytics-priority-bars">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: COLLECTIONS (Categories & Tags Manager)  -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-collections">
+          <div class="section-toolbar">
+            <div class="toolbar-left">
+              <h2>Collections & Taxonomies</h2>
+            </div>
+          </div>
+
+          <div class="collections-grid">
+            <!-- Categories Manager -->
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h3>Categories</h3>
+                <span class="panel-meta-text">Organize high-level workspaces</span>
+              </div>
+
+              <div class="collection-add-form">
+                <input type="text" id="new-category-name" placeholder="New category name..." autocomplete="off">
+                <button class="btn btn-primary btn-sm" id="btn-add-category">Add Category</button>
+              </div>
+
+              <div class="collections-list" id="collections-category-list">
+                <!-- Populated dynamically with delete/rename controls -->
+              </div>
+            </div>
+
+            <!-- Tags Manager -->
+            <div class="dashboard-panel">
+              <div class="panel-header">
+                <h3>Tags in Use</h3>
+                <span class="panel-meta-text">Cross-cutting themes</span>
+              </div>
+              <div class="tags-cloud-container" id="collections-tags-cloud">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: FAVORITES                                -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-favorites">
+          <div class="section-toolbar">
+            <div class="toolbar-left">
+              <h2>Starred & Favorite Items</h2>
+            </div>
+          </div>
+
+          <div class="notes-workspace-body">
+            <div class="notes-grid layout-grid" id="favorites-notes-grid">
+              <!-- Populated with favorite notes -->
+            </div>
+            
+            <div class="empty-state-card" id="favorites-empty-state" style="display:none;">
+              <div class="empty-state-icon">⭐</div>
+              <h3 class="empty-state-title">No favorites yet</h3>
+              <p class="empty-state-desc">Click the star icon on any note to pin it here for quick access.</p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: ARCHIVE                                  -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-archive">
+          <div class="section-toolbar">
+            <div class="toolbar-left">
+              <h2>Archived Items</h2>
+              <span class="panel-meta-text">Notes stored away for safekeeping</span>
+            </div>
+          </div>
+
+          <div class="notes-workspace-body">
+            <div class="notes-grid layout-grid" id="archive-notes-grid">
+              <!-- Populated with archived notes -->
+            </div>
+
+            <div class="empty-state-card" id="archive-empty-state" style="display:none;">
+              <div class="empty-state-icon">📦</div>
+              <h3 class="empty-state-title">Archive is empty</h3>
+              <p class="empty-state-desc">Finished notes can be archived to keep your workspace decluttered.</p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: TRASH                                    -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-trash">
+          <div class="section-toolbar">
+            <div class="toolbar-left">
+              <h2>Trash Bin</h2>
+              <span class="panel-meta-text">Items remain here until permanently deleted</span>
+            </div>
+            <div class="toolbar-right">
+              <button class="btn btn-danger btn-sm" id="btn-empty-trash">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/></svg>
+                <span>Empty Trash</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="notes-workspace-body">
+            <div class="notes-grid layout-grid" id="trash-notes-grid">
+              <!-- Populated with trashed notes with Restore/Delete options -->
+            </div>
+
+            <div class="empty-state-card" id="trash-empty-state" style="display:none;">
+              <div class="empty-state-icon">🗑️</div>
+              <h3 class="empty-state-title">Trash is empty</h3>
+              <p class="empty-state-desc">Deleted items will appear here where you can restore them.</p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================== -->
+        <!-- VIEW: SETTINGS                                 -->
+        <!-- ============================================== -->
+        <section class="view-section" id="view-settings">
+          <div class="settings-container">
+            <h2>Preferences & Data Vault</h2>
+            <p class="section-sub">Customize your MindVault experience and manage local browser backups.</p>
+
+            <!-- Appearance Settings -->
+            <div class="settings-card">
+              <h3 class="settings-group-title">Appearance</h3>
+              
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Theme Mode</span>
+                  <span class="settings-desc">Choose dark midnight, clean light, or follow system theme.</span>
+                </div>
+                <div class="select-wrapper">
+                  <select id="settings-theme-select">
+                    <option value="dark">Dark Theme (Midnight)</option>
+                    <option value="light">Light Theme (Executive)</option>
+                    <option value="system">Follow System</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Accent Color</span>
+                  <span class="settings-desc">Customize interface highlights and status rings.</span>
+                </div>
+                <div class="accent-color-picker" id="settings-accent-picker">
+                  <button class="accent-btn active" data-accent="violet" title="Electric Violet" style="background:#8B5CF6;"></button>
+                  <button class="accent-btn" data-accent="blue" title="Soft Blue" style="background:#3B82F6;"></button>
+                  <button class="accent-btn" data-accent="mint" title="Emerald Mint" style="background:#10B981;"></button>
+                  <button class="accent-btn" data-accent="amber" title="Sunset Amber" style="background:#F59E0B;"></button>
+                  <button class="accent-btn" data-accent="rose" title="Rose Quartz" style="background:#EC4899;"></button>
+                </div>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Interface Density</span>
+                  <span class="settings-desc">Comfortable spacing or compact information density.</span>
+                </div>
+                <div class="select-wrapper">
+                  <select id="settings-density-select">
+                    <option value="comfortable">Comfortable</option>
+                    <option value="compact">Compact</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile & Personalization -->
+            <div class="settings-card">
+              <h3 class="settings-group-title">Personalization</h3>
+              
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Display Name</span>
+                  <span class="settings-desc">Used for dashboard greetings and personalized command prompts.</span>
+                </div>
+                <input type="text" class="input-text" id="settings-username" value="Explorer" autocomplete="off">
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Default Start Section</span>
+                  <span class="settings-desc">Page loaded when launching MindVault.</span>
+                </div>
+                <div class="select-wrapper">
+                  <select id="settings-start-section">
+                    <option value="dashboard">Dashboard</option>
+                    <option value="notes">All Notes</option>
+                    <option value="tasks">Tasks</option>
+                    <option value="journal">Daily Journal</option>
+                    <option value="focus">Focus Studio</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Daily Task Target</span>
+                  <span class="settings-desc">Number of tasks you aim to complete daily.</span>
+                </div>
+                <input type="number" class="input-text" id="settings-daily-target" min="1" max="50" value="5">
+              </div>
+            </div>
+
+            <!-- Focus Timer Defaults -->
+            <div class="settings-card">
+              <h3 class="settings-group-title">Focus Studio Durations</h3>
+              
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Focus Sprint Duration (Minutes)</span>
+                </div>
+                <input type="number" class="input-text" id="settings-focus-dur" min="1" max="120" value="25">
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Short Break (Minutes)</span>
+                </div>
+                <input type="number" class="input-text" id="settings-short-break-dur" min="1" max="30" value="5">
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Long Break (Minutes)</span>
+                </div>
+                <input type="number" class="input-text" id="settings-long-break-dur" min="1" max="60" value="15">
+              </div>
+            </div>
+
+            <!-- Data Management & Backups -->
+            <div class="settings-card">
+              <h3 class="settings-group-title">Data Storage & Backups</h3>
+              <p class="settings-notice">
+                MindVault stores your entire workspace inside your web browser's LocalStorage. No data is sent to external servers. To avoid losing notes if browser history is purged, export regular JSON backups.
+              </p>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Export Vault Backup (JSON)</span>
+                  <span class="settings-desc">Download a comprehensive timestamped JSON snapshot of all notes, tasks, journals, and sessions.</span>
+                </div>
+                <button class="btn btn-secondary" id="btn-export-json">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  <span>Export JSON</span>
+                </button>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Export All Notes (Markdown)</span>
+                  <span class="settings-desc">Download all your active notes formatted as pure Markdown files in a combined bundle.</span>
+                </div>
+                <button class="btn btn-secondary" id="btn-export-markdown-all">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  <span>Export Notes (.md)</span>
+                </button>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Import Vault Backup</span>
+                  <span class="settings-desc">Restore from a previous MindVault JSON backup file.</span>
+                </div>
+                <div class="file-upload-box">
+                  <input type="file" id="import-json-input" accept=".json" style="display:none;">
+                  <button class="btn btn-secondary" id="btn-trigger-import">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                    <span>Choose Backup File</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-label-box">
+                  <span class="settings-title">Sample Workspace Data</span>
+                  <span class="settings-desc">Load realistic sample notes, tasks, and journals to explore MindVault's capabilities.</span>
+                </div>
+                <button class="btn btn-secondary" id="btn-load-sample-data">Load Sample Data</button>
+              </div>
+
+              <div class="settings-row danger-row">
+                <div class="settings-label-box">
+                  <span class="settings-title text-danger">Reset All Vault Data</span>
+                  <span class="settings-desc">Permanently purge all notes, tasks, journals, and local settings. This action cannot be undone.</span>
+                </div>
+                <button class="btn btn-danger" id="btn-reset-vault">Purge Vault</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+
+    <!-- ============================================== -->
+    <!-- RIGHT CONTEXT PANEL (Desktop Assistant)        -->
+    <!-- ============================================== -->
+    <aside class="app-context-panel" id="app-context-panel" aria-label="Context Panel">
+      
+      <div class="context-panel-header">
+        <h4 class="context-title">At a Glance</h4>
+        <button class="icon-btn" id="context-close-btn" title="Close Panel" aria-label="Close Panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="context-panel-content">
+        
+        <!-- Mini Pomodoro status -->
+        <div class="context-card mini-focus-card">
+          <div class="context-card-header">
+            <span class="context-card-title">Focus Status</span>
+            <span class="status-indicator-dot" id="context-focus-dot"></span>
+          </div>
+          <div class="mini-focus-body">
+            <div class="mini-focus-digits" id="context-focus-timer">25:00</div>
+            <button class="btn btn-primary btn-sm btn-block" id="context-focus-btn">Launch Focus</button>
+          </div>
+        </div>
+
+        <!-- Today's quick tasks -->
+        <div class="context-card">
+          <div class="context-card-header">
+            <span class="context-card-title">Today's Tasks</span>
+            <span class="context-card-meta" id="context-tasks-count">0</span>
+          </div>
+          <div class="context-tasks-list" id="context-tasks-list">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Recently modified notes -->
+        <div class="context-card">
+          <div class="context-card-header">
+            <span class="context-card-title">Recent Notes</span>
+          </div>
+          <div class="context-notes-list" id="context-notes-list">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="context-card">
+          <div class="context-card-header">
+            <span class="context-card-title">Quick Actions</span>
+          </div>
+          <div class="context-action-buttons">
+            <button class="context-quick-btn" id="ctx-action-new-note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+              <span>New Note</span>
+            </button>
+            <button class="context-quick-btn" id="ctx-action-new-task">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <span>New Task</span>
+            </button>
+            <button class="context-quick-btn" id="ctx-action-journal">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 4H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+              <span>Open Journal</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+
+
+  <!-- ============================================== -->
+  <!-- UNIVERSAL OVERLAYS & MODALS                    -->
+  <!-- ============================================== -->
+
+  <!-- GLOBAL COMMAND PALETTE (Ctrl+K) -->
+  <div class="modal-overlay" id="palette-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="Command Palette">
+    <div class="command-palette-card">
+      <div class="palette-input-box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="palette-search-input" placeholder="Type a command or search notes, tasks, journals..." autocomplete="off">
+        <kbd class="esc-kbd">ESC</kbd>
+      </div>
+
+      <div class="palette-results-container" id="palette-results">
+        <!-- Results and quick commands grouped dynamically -->
+      </div>
+      
+      <div class="palette-footer">
+        <div class="palette-footer-keys">
+          <span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+          <span><kbd>↵</kbd> Select</span>
+          <span><kbd>ESC</kbd> Close</span>
+        </div>
+        <span class="palette-tagline">MindVault Commands</span>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- UNIVERSAL QUICK CAPTURE MODAL (Ctrl+Shift+N) -->
+  <div class="modal-overlay" id="quick-capture-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="Quick Capture">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-type-tabs" id="qc-type-tabs">
+          <button class="qc-tab active" data-type="note">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></svg>
+            <span>Note</span>
+          </button>
+          <button class="qc-tab" data-type="task">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            <span>Task</span>
+          </button>
+        </div>
+        <button class="icon-btn modal-close-btn" id="qc-modal-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <input type="text" class="modal-input-title" id="qc-title-input" placeholder="Title or thought..." autocomplete="off">
+        <textarea class="modal-textarea" id="qc-body-input" placeholder="Details, thoughts, notes... (optional)"></textarea>
+
+        <div class="modal-form-meta-row">
+          <!-- Dynamic fields depending on Note vs Task -->
+          <div class="select-wrapper">
+            <select id="qc-category-select" aria-label="Category">
+              <!-- Categories populated dynamically -->
+            </select>
+          </div>
+
+          <div id="qc-task-fields" style="display:none;" class="qc-task-meta-group">
+            <input type="date" id="qc-task-due" title="Due Date">
+            <select id="qc-task-priority" aria-label="Priority">
+              <option value="medium">Medium Priority</option>
+              <option value="high">High Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+
+          <input type="text" class="qc-tags-input" id="qc-tags-input" placeholder="Tags (comma-separated)">
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <span class="modal-hint"><kbd>Ctrl+Enter</kbd> to save immediately</span>
+        <div class="modal-btn-row">
+          <button class="btn btn-ghost" id="qc-cancel-btn">Cancel</button>
+          <button class="btn btn-primary" id="qc-save-btn">Capture Item</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FIRST-TIME ONBOARDING / WELCOME MODAL -->
+  <div class="modal-overlay" id="welcome-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="Welcome to MindVault">
+    <div class="modal-dialog welcome-dialog">
+      <div class="welcome-header">
+        <div class="welcome-gem">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h2 class="welcome-title">Welcome to MindVault</h2>
+        <p class="welcome-tagline">"Your mind is for ideas. Let MindVault remember the rest."</p>
+      </div>
+
+      <div class="welcome-body">
+        <p class="welcome-desc">MindVault is your private, local-first second brain. Everything stays securely on this device in your browser's persistent storage.</p>
+        
+        <div class="welcome-choice-cards">
+          <div class="choice-card active" id="choice-sample-data">
+            <div class="choice-icon">🚀</div>
+            <h4>Explore with Sample Data</h4>
+            <p>Pre-populates sample research notes, projects, daily journal, and tasks to explore MindVault's capabilities immediately.</p>
+          </div>
+          <div class="choice-card" id="choice-blank-workspace">
+            <div class="choice-icon">✨</div>
+            <h4>Start with Blank Workspace</h4>
+            <p>A fresh, pristine canvas for your own thoughts, knowledge, and goals from scratch.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer welcome-footer">
+        <button class="btn btn-primary btn-lg btn-block" id="btn-welcome-confirm">Enter MindVault</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CONFIRM DESTRUCTIVE ACTION MODAL -->
+  <div class="modal-overlay" id="confirm-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="Confirm Action">
+    <div class="modal-dialog confirm-dialog">
+      <div class="modal-header">
+        <h3 id="confirm-modal-title">Confirm Action</h3>
+        <button class="icon-btn modal-close-btn" id="confirm-modal-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-modal-message">Are you sure you want to proceed?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="confirm-modal-cancel">Cancel</button>
+        <button class="btn btn-danger" id="confirm-modal-ok">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- IMPORT PREVIEW & MERGE/REPLACE MODAL -->
+  <div class="modal-overlay" id="import-modal" style="display:none;" role="dialog" aria-modal="true" aria-label="Import Backup">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Import Backup Preview</h3>
+        <button class="icon-btn modal-close-btn" id="import-modal-close" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>The backup file was verified successfully. Here is what will be imported:</p>
+        <div class="import-stats-summary" id="import-stats-summary">
+          <!-- Populated with item counts -->
+        </div>
+        
+        <div class="import-mode-selection">
+          <label class="radio-label">
+            <input type="radio" name="import-mode" value="merge" checked>
+            <span><strong>Merge with existing data</strong> (recommended — keeps current notes and adds new ones)</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="import-mode" value="replace">
+            <span><strong class="text-danger">Replace all existing data</strong> (overwrites current vault completely)</span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" id="import-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="import-execute-btn">Complete Import</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Application Script -->
+  <script src="script.js"></script>
+</body>
+</html>
